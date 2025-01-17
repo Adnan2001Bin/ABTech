@@ -1,11 +1,11 @@
 import React from 'react'
 
-function AuthPage() {
+function Register() {
   return (
     <div>
-      Auth
+      Register
     </div>
   )
 }
 
-export default AuthPage
+export default Register
