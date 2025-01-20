@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import {User} from "../../models/user.model.js";
 import ms from "ms";
+import transporter from "../../config/nodemailer.js";
 
 // Utility for creating JWT
 const createToken = (user) => {
@@ -55,6 +56,16 @@ export const registerUser = async (req, res) => {
       sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
       maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h"),
     });
+
+    //sending welcome email
+    const mailOptions = {
+      from: process.env.SENDER_EMAIL,
+      to: email,
+      subject:'Welcome to AB-TECH',
+      text:`Welcome to AB-TECH website .Your account has been created with email id:${email}`
+    }
+
+    await transporter.sendMail(mailOptions)
 
     return res.status(201).json({
       success: true,
