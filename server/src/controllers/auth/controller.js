@@ -1,55 +1,151 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../../models/user.model.js";
+import {User} from "../../models/user.model.js";
+import ms from "ms";
 
-export const register = async (req, res) => {
+// Utility for creating JWT
+const createToken = (user) => {
+  const { _id, role, email, userName } = user;
+  return jwt.sign(
+    { id: _id, role, email, userName },
+    process.env.JWT_TOKEN_SECRET || "default_secret",
+    { expiresIn: process.env.ACCESS_TOKEN_EXPIRY || "1h" }
+  );
+};
+
+// Register User
+export const registerUser = async (req, res) => {
   const { userName, email, password } = req.body;
 
   if (!userName || !email || !password) {
-    return res.json({ success: false, messege: "Missing Details" });
+    return res.status(400).json({
+      success: false,
+      message: "Missing required fields: userName, email, or password.",
+    });
   }
 
   try {
+    // Check if user already exists
     const existingUser = await User.findOne({ email });
-
     if (existingUser) {
-      return res.json({
+      return res.status(400).json({
         success: false,
-        message: "User Already exists with the same email! Please try again",
+        message: "User already exists with this email. Please log in.",
       });
     }
 
+    // Hash password
     const hashPassword = await bcrypt.hash(password, 12);
 
+    // Create new user
     const newUser = new User({
       userName,
       email,
       password: hashPassword,
     });
-
     await newUser.save();
-    res.status(200).json({
-      success: true,
-      message: "Registration successful",
-    });
 
-    const token = jwt.sign({ id: newUser._id }, process.env.JWT_TOKEN_SECRET, {
-      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
-    });
+    // Generate token
+    const token = createToken(newUser);
 
+    // Set cookie
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite:process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-      maxAge: 1 * 24 * 60 * 1000
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h"),
+    });
 
+    return res.status(201).json({
+      success: true,
+      message: "Registration successful",
+      token,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
+    console.error("Error during user registration:", error);
+    return res.status(500).json({
       success: false,
-      message: "Some error occured",
-      error: error,
+      message: "An error occurred while registering the user.",
+      error: error.message,
+    });
+  }
+};
+
+// Login User
+export const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({
+      success: false,
+      message: "Email and password are required.",
+    });
+  }
+
+  try {
+    // Check if user exists
+    const existingUser = await User.findOne({ email });
+    if (!existingUser) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found. Please register first.",
+      });
+    }
+
+    // Compare passwords
+    const isPasswordMatch = await bcrypt.compare(password, existingUser.password);
+    if (!isPasswordMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid credentials. Please try again.",
+      });
+    }
+
+    // Generate token
+    const token = createToken(existingUser);
+
+    // Set cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h"),
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Login successful",
+      token,
+    });
+  } catch (error) {
+    console.error("Error during user login:", error);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while logging in the user.",
+      error: error.message,
+    });
+  }
+};
+
+// Logout User
+export const logoutUser = (req, res) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Logged out successfully.",
+    });
+  } catch (error) {
+    console.error("Error during user logout:", error);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while logging out the user.",
+      error: error.message,
     });
   }
 };
