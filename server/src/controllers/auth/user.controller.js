@@ -1,26 +1,42 @@
 import { User } from "../../models/user.model.js";
 
+// Get User Data
 export const getUserData = async (req, res) => {
   try {
     const { userId } = req.body;
 
-    const user = await User.findById(userId);
-
-    if (!user) {
-      return res.json({
+    // Validate input
+    if (!userId) {
+      return res.status(400).json({
         success: false,
-        messege: "User Not Found",
+        message: "User ID is required.",
       });
     }
 
-    res.json({
+    // Fetch user from database
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+
+    // Respond with user data
+    return res.status(200).json({
       success: true,
       userData: {
         name: user.userName,
+        email:user.email,
         isAccountVerified: user.isAccountVerified,
       },
     });
   } catch (error) {
-    res.json({ success: false, message: error.message });
+    console.error("Error fetching user data:", error);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while fetching user data.",
+      error: error.message,
+    });
   }
 };
