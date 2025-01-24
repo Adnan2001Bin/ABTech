@@ -9,8 +9,9 @@ import {
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
+import { Button } from "../ui/button";
 
-const Form = ({
+const CommonForm = ({
   formControls,
   formData,
   setFormData,
@@ -27,6 +28,7 @@ const Form = ({
       case "input":
         element = (
           <Input
+            className="bg-transparent outline-none border-none 'mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#333A5C]"
             id={getControlItem.name}
             name={getControlItem.name}
             placeholder={getControlItem.placeholder}
@@ -58,7 +60,7 @@ const Form = ({
             </SelectTrigger>
 
             <SelectContent className="absolute z-50 max-h-60 overflow-y-auto bg-white shadow-lg border rounded-md">
-              {getControlItem.options && getControlItem.options > 0
+              {getControlItem.options && getControlItem.options.length > 0
                 ? getControlItem.options.map((optionItem) => (
                     <SelectItem key={optionItem.id} value={optionItem.id}>
                       {optionItem.label}
@@ -68,8 +70,8 @@ const Form = ({
             </SelectContent>
           </Select>
         );
-
         break;
+
       case "textarea":
         element = (
           <Textarea
@@ -85,7 +87,6 @@ const Form = ({
             }
           />
         );
-
         break;
 
       default:
@@ -106,22 +107,42 @@ const Form = ({
         );
         break;
     }
+    return element;
   };
+
   return (
     <form onSubmit={onSubmit}>
-      <div className="flex flex-col gap-3 ">
+      <div className="flex flex-col gap-3">
         {formControls.map((controlItem) => (
           <div className="grid w-full gap-1.5" key={controlItem.name}>
-            <Label className="mb-1 ">{controlItem.label}</Label>
+            <Label className="mb-1 flex items-center gap-2">
+              {controlItem.logo && (
+                <span className="text-lg">{controlItem.logo}</span>
+              )}
+              {controlItem.label}
+            </Label>
             {renderInputsByComponentType(controlItem)}
           </div>
         ))}
       </div>
-      <Button disabled={isBtnDisabled} type="submit" className="mt-2 w-full">
-        {buttonText || "Submit"}
+      <Button
+        disabled={isBtnDisabled}
+        type="submit"
+        className={`w-full py-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-900 text-white font-medium mt-5 
+    transition duration-300 ease-in-out transform hover:scale-100 hover:from-indigo-400 hover:to-indigo-800 
+    will-change-transform ${
+      isBtnDisabled ? "opacity-50 cursor-not-allowed" : ""
+    }`}
+        style={{
+          transformOrigin: "center",
+        }}
+      >
+        <span className="block transform-gpu transition-transform duration-300">
+          {buttonText || "Submit"}
+        </span>
       </Button>
     </form>
   );
 };
 
-export default Form;
+export default CommonForm;

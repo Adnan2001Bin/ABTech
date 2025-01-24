@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import AuthLayout from "./components/auth/layout";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
-import Login from "./pages/auth/login";
-import Register from "./pages/auth/register";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 import AdminLayout from "./components/admin-view/layout";
 import AdminAdditems from "./pages/admin-view/add-items";
 import AdminListItems from "./pages/admin-view/list-items";
