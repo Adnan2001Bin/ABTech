@@ -16,7 +16,7 @@ const Login = () => {
       <h1 className="text-3xl font-semibold text-white text-center mb-3">
         Login
       </h1>
-      <p className="text-center text-sm mb-5">Login to your accountt</p>
+      <p className="text-center text-sm mb-5">Login to your account</p>
       <div>
         <CommonForm
           formControls={loginFormControls}
