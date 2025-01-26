@@ -10,7 +10,7 @@ authAouter.post("/login", loginUser);
 authAouter.post("/logout", logoutUser);
 authAouter.post("/send-verify-otp", authMiddleware , sendVerifyOtp);
 authAouter.post("/verify-account", authMiddleware , verifyEmail);
-authAouter.post("/is-auth", authMiddleware , isAuthenticated);
+authAouter.get("/is-auth", authMiddleware , isAuthenticated);
 authAouter.post("/send-reset-otp", sendResetOtp);
 authAouter.post("/reset-password", resetPassword);
 
