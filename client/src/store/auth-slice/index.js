@@ -40,19 +40,25 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const logoutUser = createAsyncThunk("/auth/logout", async () => {
-  const response = await axios.post(
-    "http://localhost:3000/api/auth/logout",
-    {},
-    {
-      withCredentials: true,
-    }
-  );
-  return response.data;
-});
+export const logoutUser = createAsyncThunk(
+  "/auth/logout",
+
+  async () => {
+    const response = await axios.post(
+      "http://localhost:3000/api/auth/logout",
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data;
+  }
+);
+
 
 export const checkAuth = createAsyncThunk(
-  "/auth/is-auth",
+  "/auth/checkauth",
 
   async () => {
     const response = await axios.get(
@@ -74,7 +80,7 @@ const authslice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    serUser: (state, action) => {},
+    setUser: (state, action) => {},
   },
   extraReducers: (builder) => {
     builder
@@ -91,12 +97,10 @@ const authslice = createSlice({
         state.user = null;
         state.isAuthenticated = false;
       })
-
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log(action);
         state.isLoading = false;
         state.user = action.payload.success ? action.payload.user : null;
         state.isAuthenticated = action.payload.success;
@@ -110,10 +114,12 @@ const authslice = createSlice({
         state.isLoading = true;
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
+        console.log("checkAuth response:", action.payload);
         state.isLoading = false;
         state.user = action.payload.success ? action.payload.user : null;
         state.isAuthenticated = action.payload.success;
-      })
+      })      
+      
       .addCase(checkAuth.rejected, (state, action) => {
         state.isLoading = false;
         state.user = null;
@@ -127,5 +133,6 @@ const authslice = createSlice({
   },
 });
 
-export const { serUser } = authslice.actions;
+export const { setUser } = authslice.actions;
 export default authslice.reducer;
+

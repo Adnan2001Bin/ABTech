@@ -320,7 +320,13 @@ export const isAuthenticated = async (req, res) => {
       return res.status(401).json({ success: false, message: "Invalid token." });
     }
 
-    res.json({ success: true, message: "User is authenticated.", userId: decoded.id });
+    // Fetch user details
+    const user = await User.findById(decoded.id).select("-password");
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found." });
+    }
+
+    res.json({ success: true, message: "User is authenticated.", user });
   } catch (error) {
     console.error("Error during authentication check:", error);
     res.status(500).json({
@@ -329,4 +335,3 @@ export const isAuthenticated = async (req, res) => {
     });
   }
 };
-

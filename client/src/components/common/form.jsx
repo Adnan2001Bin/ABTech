@@ -18,6 +18,12 @@ const CommonForm = ({
   onSubmit,
   buttonText,
   isBtnDisabled,
+  formClassName = "", // Custom class for the form container
+  inputClassName = "", // Custom class for input fields
+  selectClassName = "",
+  textareaClassName = "",
+  buttonClassName = "", // Custom class for the submit button
+  labelClassName = "", // Custom class for labels
 }) => {
   const renderInputsByComponentType = (getControlItem) => {
     let element = null;
@@ -28,7 +34,7 @@ const CommonForm = ({
       case "input":
         element = (
           <Input
-            className="bg-transparent outline-none border-none 'mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#333A5C]"
+            className={`bg-transparent outline-none border-none mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full ${inputClassName}`}
             id={getControlItem.name}
             name={getControlItem.name}
             placeholder={getControlItem.placeholder}
@@ -54,12 +60,15 @@ const CommonForm = ({
               })
             }
             value={value}
+            className={selectClassName}
           >
-            <SelectTrigger>
+            <SelectTrigger
+              className={`border-2 border-slate-400 rounded-md p-2 ${inputClassName}`}
+            >
               <SelectValue />
             </SelectTrigger>
 
-            <SelectContent className="absolute z-50 max-h-60 overflow-y-auto bg-white shadow-lg border rounded-md">
+            <SelectContent className="absolute z-50 max-h-60 overflow-y-auto bg-white shadow-lg border border-gray-300 rounded-md">
               {getControlItem.options && getControlItem.options.length > 0
                 ? getControlItem.options.map((optionItem) => (
                     <SelectItem key={optionItem.id} value={optionItem.id}>
@@ -75,6 +84,7 @@ const CommonForm = ({
       case "textarea":
         element = (
           <Textarea
+            className={`border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${textareaClassName}`}
             name={getControlItem.name}
             placeholder={getControlItem.placeholder}
             id={getControlItem.id}
@@ -88,7 +98,6 @@ const CommonForm = ({
           />
         );
         break;
-
       default:
         element = (
           <Input
@@ -103,6 +112,7 @@ const CommonForm = ({
                 [getControlItem.name]: event.target.value,
               })
             }
+            className={inputClassName}
           />
         );
         break;
@@ -111,11 +121,11 @@ const CommonForm = ({
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className={formClassName}>
       <div className="flex flex-col gap-3">
         {formControls.map((controlItem) => (
           <div className="grid w-full gap-1.5" key={controlItem.name}>
-            <Label className="mb-1 flex items-center gap-2">
+            <Label className={`mb-1 flex items-center gap-2 ${labelClassName}`}>
               {controlItem.logo && (
                 <span className="text-lg">{controlItem.logo}</span>
               )}
@@ -128,11 +138,9 @@ const CommonForm = ({
       <Button
         disabled={isBtnDisabled}
         type="submit"
-        className={`w-full py-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-900 text-white font-medium mt-5 
-    transition duration-300 ease-in-out transform hover:scale-100 hover:from-indigo-400 hover:to-indigo-800 
-    will-change-transform ${
+        className={`${
       isBtnDisabled ? "opacity-50 cursor-not-allowed" : ""
-    }`}
+    } ${buttonClassName}`}
         style={{
           transformOrigin: "center",
         }}

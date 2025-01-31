@@ -17,7 +17,6 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Toast messages
   const handleSuccessToast = () => {
     toast.success("Registration successful!...", {
       position: "top-center",
@@ -35,7 +34,7 @@ const Register = () => {
     dispatch(registerUser(formData)).then((data) => {
       if (data?.payload?.success) {
         handleSuccessToast();
-        setTimeout(() => navigate("/auth/login"), 2000); // Navigate after toast
+        setTimeout(() => navigate("/auth/login"), 2000);
       } else {
         handleErrorToast(data?.payload?.message);
       }
@@ -55,6 +54,12 @@ const Register = () => {
           formData={formData}
           setFormData={setFormData}
           onSubmit={onSubmit}
+          formClassName="space-y-4" // Custom form class
+          inputClassName="bg-[#333A5C] text-white" // Custom input class
+          buttonClassName="w-full py-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-900 text-white font-medium mt-5 
+    transition duration-300 ease-in-out transform hover:scale-100 hover:from-indigo-400 hover:to-indigo-800 
+    will-change-transform " // Custom button class
+          labelClassName="text-white" // Custom label class
         />
 
         <p className="text-gray-400 text-center text-xs mt-4">
