@@ -1,0 +1,17 @@
+import mongoose from "mongoose";
+
+const ProductSchema = new mongoose.Schema(
+  {
+    images: [String],
+    title: String,
+    description: String,
+    category: String,
+    price: Number,
+    salePrice: Number,
+    totalStock: Number,
+    averageReview: Number,
+  },
+  { timestamps: true }
+);
+
+export const Product = mongoose.model("Product", ProductSchema);

@@ -1,129 +1,117 @@
 import React, { useRef, useState } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { Skeleton } from "../ui/skeleton";
-import { FileIcon, XIcon } from "lucide-react";
 import { Button } from "../ui/button";
+import axios from "axios";
+import { Skeleton } from "../ui/skeleton";
 
-const ProductImageUpload = ({
+function ProductImageUpload({
   imageFiles,
   setImageFiles,
-  imageLoadingState,
-  setImageLoadingState,
-}) => {
+  imageLoadingStates,
+  uploadedImageUrls,
+  setUploadedImageUrls,
+  setImageLoadingStates,
+  isEditMode,
+  isCustomStyling = false,
+}) {
   const inputRefs = useRef([]);
-  const [errors, setErrors] = useState([]);
 
-  // Handle file selection
   const handleImageFileChange = (event, index) => {
     const selectedFile = event.target.files?.[0];
-
     if (selectedFile) {
-      // Basic file validation
-      if (!selectedFile.type.startsWith("image/")) {
-        setErrors((prev) => {
-          const newErrors = [...prev];
-          newErrors[index] = "Please upload a valid image file.";
-          return newErrors;
-        });
-        return;
-      }
-
-      if (selectedFile.size > 5 * 1024 * 1024) {
-        // 5MB limit
-        setErrors((prev) => {
-          const newErrors = [...prev];
-          newErrors[index] = "File size must be less than 5MB.";
-          return newErrors;
-        });
-        return;
-      }
-
-      setErrors((prev) => {
-        const newErrors = [...prev];
-        newErrors[index] = "";
-        return newErrors;
-      });
-
-      // Update imageFiles state
-      setImageFiles((prev) => {
-        const newFiles = [...prev];
-        newFiles[index] = selectedFile;
-        return newFiles;
-      });
+      const newImageFiles = [...imageFiles];
+      newImageFiles[index] = selectedFile;
+      setImageFiles(newImageFiles);
+      uploadImageToCloudinary(selectedFile, index);
     }
   };
 
-  // Handle file removal
-  const handleRemoveFile = (index) => {
-    setImageFiles((prev) => {
-      const newFiles = [...prev];
-      newFiles[index] = null;
-      return newFiles;
-    });
-    setErrors((prev) => {
-      const newErrors = [...prev];
-      newErrors[index] = "";
-      return newErrors;
-    });
+  const handleRemoveImage = (index) => {
+    const newImageFiles = [...imageFiles];
+    newImageFiles[index] = null;
+    setImageFiles(newImageFiles);
+
+    const newUploadedImageUrls = [...uploadedImageUrls];
+    newUploadedImageUrls[index] = "";
+    setUploadedImageUrls(newUploadedImageUrls);
+
+    // Reset the corresponding file input
+    if (inputRefs.current[index]) {
+      inputRefs.current[index].value = "";
+    }
+  };
+
+  const uploadImageToCloudinary = async (file, index) => {
+    const newImageLoadingStates = [...imageLoadingStates];
+    newImageLoadingStates[index] = true;
+    setImageLoadingStates(newImageLoadingStates);
+
+    const data = new FormData();
+    data.append("my_file", file);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/admin/products/upload-image",
+        data
+      );
+
+      if (response?.data?.success) {
+        const newUploadedImageUrls = [...uploadedImageUrls];
+        newUploadedImageUrls[index] = response.data.result.url;
+        setUploadedImageUrls(newUploadedImageUrls);
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      alert("Failed to upload image. Please try again.");
+    } finally {
+      const newImageLoadingStates = [...imageLoadingStates];
+      newImageLoadingStates[index] = false;
+      setImageLoadingStates(newImageLoadingStates);
+    }
   };
 
   return (
-    <div className="space-y-4">
-      <Label>Upload Images (Up to 4)</Label>
+    <div className={`w-full mt-4 ${isCustomStyling ? "" : "max-w-md mx-auto"}`}>
+      <Label className="text-lg font-semibold mb-2 block">Upload Images</Label>
       <div className="flex gap-5">
         {[...Array(4)].map((_, index) => (
-          <div
-            key={index}
-            className="w-1/5 border-2 border-dashed rounded-lg p-4 relative"
-          >
+          <div key={index} className="w-1/5 border-2 border-dashed rounded-lg p-4 relative">
             <Input
               id={`image-upload-${index}`}
-              className="hidden"
               type="file"
-              ref={(el) => (inputRefs.current[index] = el)}
-              onChange={(e) => handleImageFileChange(e, index)}
-              accept="image/*"
+              className="hidden"
+              ref={(el) => (inputRefs.current[index] = el)} // Bind input reference per slot
+              onChange={(event) => handleImageFileChange(event, index)}
+              disabled={isEditMode}
             />
-
             {!imageFiles[index] ? (
-              <Label htmlFor={`image-upload-${index}`} className="cursor-pointer">
-                <img
-                  className="w-10 h-10 text-muted-foreground mb-2 mx-auto"
-                  src="/src/assets/photo.png"
-                  alt="Upload icon"
-                />
-                <span className="text-sm text-center block">Upload</span>
+              <Label htmlFor={`image-upload-${index}`} className="flex flex-col items-center h-20 cursor-pointer">
+                <img src="/src/assets/photo.png" alt="Upload icon" className="w-10 h-10 mb-2" />
+                <span className="text-sm text-center">Upload</span>
               </Label>
-            ) : imageLoadingState ? (
+            ) : imageLoadingStates[index] ? (
               <Skeleton className="h-10 bg-gray-100" />
             ) : (
               <div className="flex flex-col items-center justify-between">
-                <img
-                  src={URL.createObjectURL(imageFiles[index])}
-                  alt={`Uploaded preview ${index}`}
-                  className="w-16 h-16 object-cover rounded-md mb-2"
-                />
+                <div className="flex items-center">
+                  <img src={URL.createObjectURL(imageFiles[index])} alt={`Preview ${index}`} className="w-16 h-16 object-cover rounded-md mb-2" />
+                </div>
                 <Button
                   variant="ghost"
                   size="icon"
                   className="absolute top-1 right-1 bg-gray-200 hover:text-foreground"
-                  onClick={() => handleRemoveFile(index)}
+                  onClick={() => handleRemoveImage(index)}
                 >
-                  <XIcon className="w-4 h-4" />
-                  <span className="sr-only">Remove File</span>
+                  ✕
                 </Button>
               </div>
-            )}
-
-            {errors[index] && (
-              <p className="text-red-500 text-xs mt-1">{errors[index]}</p>
             )}
           </div>
         ))}
       </div>
     </div>
   );
-};
+}
 
 export default ProductImageUpload;

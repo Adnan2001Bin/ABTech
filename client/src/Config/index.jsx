@@ -65,12 +65,12 @@ export const addProductFormElements = [
     name: "category",
     componentType: "select",
     options: [
-      { id: "bedroom", label: "Bedroom" },
-      { id: "dinningroom", label: "Dinningroom" },
-      { id: "livingroom", label: "Livingroom" },
-      { id: "office", label: "Office" },
-      { id: "door", label: "Door" },
-      { id: "newArrivals", label: "New Arrivals" },
+      { id: "earbuds", label: "Earbuds" },
+      { id: "neckbands", label: "Neckbands" },
+      { id: "smart-watches", label: "Smart Watches" },
+      { id: "wireless-headphones", label: "Wireless Headphones" },
+      { id: "wired-headphones", label: "Wired Headphones" },
+      { id: "wired-earphones", label: "Wired Earphones" },
     ],
   },
 

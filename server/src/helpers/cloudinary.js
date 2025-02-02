@@ -13,10 +13,10 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // Utility function to upload image to Cloudinary
-async function imageUploadUtil(fileBuffer, typeOfTheFile) {
+async function imageUploadUtil(fileBuffer ,mimetype) {
   try {
     // Validate file type
-    if (!typeOfTheFile.startsWith("image/")) {
+    if (!mimetype.startsWith("image/")) {
       throw new Error("Only image files are allowed.");
     }
 

@@ -3,8 +3,9 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authAouter from "./routes/auth/auth.route.js";
 import userRouter from "./routes/auth/user.route.js";
-
+import adminProductsRouter from "./routes/admin/products-routes.js";
 const app = express();
+
 
 app.use(
   cors({
@@ -25,6 +26,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth" , authAouter)
 app.use("/api/user" , userRouter)
+app.use("/api/admin/products", adminProductsRouter);
+
 
 
 export default app;

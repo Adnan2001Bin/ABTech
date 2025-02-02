@@ -7,7 +7,7 @@ function AdminLayout() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="w-full px-6 md:px:4 lg:px:1">
+    <div className="w-full px-4 md:px-6 lg:px-8">
       {/* Header */}
       <AdminHeader setOpen={setSidebarOpen} />
       <div className="flex min-h-screen">
@@ -26,4 +26,4 @@ function AdminLayout() {
   );
 }
 
-export default AdminLayout;
+export default AdminLayout
