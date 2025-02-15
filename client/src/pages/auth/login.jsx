@@ -19,6 +19,8 @@ const Login = () => {
   const handleSuccessToast = () => {
     toast.success("Login Account successful!...", {
       position: "top-center",
+      autoClose:2000
+
     });
   };
 

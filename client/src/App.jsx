@@ -19,6 +19,11 @@ import ShoppingListing from "./pages/shopping-view/listing";
 import ShoppingHome from "./pages/shopping-view/home";
 import UnauthPage from "./pages/unauth-page";
 import CheckAuth from "./components/common/Check-Auth";
+import Collections from "./pages/shopping-view/Collections";
+import DailyDeals from "./pages/shopping-view/DailyDeals";
+import Contact from "./pages/shopping-view/Contact";
+import About from "./pages/shopping-view/About";
+import ProductDetails from "./components/shopping-view/Product-Details";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -33,10 +38,6 @@ function App() {
   if (isLoading) return <Skeleton className="w-[800px] bg-black h-[600px]" />;
 
   const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <ShoppingHome />,
-    },
     {
       path: "/auth",
       element: (
@@ -64,31 +65,33 @@ function App() {
       ],
     },
     {
-      path: "/shop",
+      path: "/",
       element: (
-        // <CheckAuth isAuthenticated={isAuthenticated} user={user}>
-        // </CheckAuth>
+        <CheckAuth isAuthenticated={isAuthenticated} user={user}>
         <ShoppingLayout />
+
+        </CheckAuth>
+
       ),
       children: [
-        { path: "home", element: <ShoppingHome /> },
+        { path: "/", element: <ShoppingHome /> },
         {
           path: "account",
-          element: (
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
-              <ShoppingAccount />
-            </CheckAuth>
-          ),
+          element: <ShoppingAccount />,
         },
         {
           path: "checkout",
           element: (
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <ShoppingCheckout />
-            </CheckAuth>
           ),
         },
         { path: "listing", element: <ShoppingListing /> },
+        { path: "collections", element: <Collections /> },
+        { path: "product/:id", element: <ProductDetails /> },
+        { path: "dailydeals", element: <DailyDeals /> },
+        { path: "contact", element: <Contact /> },
+        { path: "about", element: <About /> },
+
       ],
     },
     { path: "*", element: <NotFound /> },

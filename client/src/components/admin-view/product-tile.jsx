@@ -69,7 +69,11 @@ function AdminProductTile({ product }) {
           )}
         </div>
         <p className="text-sm text-gray-600 line-clamp-2">
-          {product?.description}
+          {product?.brand}
+        </p>
+
+        <p className="text-sm text-gray-600 line-clamp-2">
+          {product?.category}
         </p>
       </CardContent>
 

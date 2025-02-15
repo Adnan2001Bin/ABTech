@@ -2,16 +2,16 @@ import express from "express";
 import {registerUser , loginUser, logoutUser, sendVerifyOtp, verifyEmail, isAuthenticated, resetPassword, sendResetOtp } from "../../controllers/auth/controller.js";
 import authMiddleware from "../../controllers/authMiddleware.js";
 
-const authAouter = express.Router();
+const authRouter = express.Router();
 
 // Public routes
-authAouter.post("/register", registerUser);
-authAouter.post("/login", loginUser);
-authAouter.post("/logout", logoutUser);
-authAouter.post("/send-verify-otp", authMiddleware , sendVerifyOtp);
-authAouter.post("/verify-account", authMiddleware , verifyEmail);
-authAouter.get("/is-auth", authMiddleware , isAuthenticated);
-authAouter.post("/send-reset-otp", sendResetOtp);
-authAouter.post("/reset-password", resetPassword);
+authRouter.post("/register", registerUser);
+authRouter.post("/login", loginUser);
+authRouter.post("/logout", logoutUser);
+authRouter.post("/send-verify-otp", authMiddleware , sendVerifyOtp);
+authRouter.post("/verify-account", authMiddleware , verifyEmail);
+authRouter.get("/is-auth", authMiddleware , isAuthenticated);
+authRouter.post("/send-reset-otp", sendResetOtp);
+authRouter.post("/reset-password", resetPassword);
 
-export default authAouter;
+export default authRouter;

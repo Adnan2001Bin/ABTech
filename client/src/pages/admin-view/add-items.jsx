@@ -14,13 +14,13 @@ import { toast } from "react-toastify";
 
 const AdminAdditems = () => {
   const location = useLocation();
-  const productData = location.state?.product;
 
   const initialFormData = {
     images: [],
     title: "",
     description: "",
     category: "",
+    brand: "",
     price: "",
     salePrice: "",
     totalStock: "",
@@ -30,20 +30,27 @@ const AdminAdditems = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [imageFiles, setImageFiles] = useState(Array(4).fill(null));
   const [uploadedImageUrls, setUploadedImageUrls] = useState(Array(4).fill(""));
-  const [imageLoadingStates, setImageLoadingStates] = useState(Array(4).fill(false));
+  const [imageLoadingStates, setImageLoadingStates] = useState(
+    Array(4).fill(false)
+  );
   const [currentEditedId, setCurrentEditedId] = useState(null);
 
   const { productList } = useSelector((state) => state.adminProducts);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const storedProductData = JSON.parse(localStorage.getItem("editProductData"));
+    const storedProductData = JSON.parse(
+      localStorage.getItem("editProductData")
+    );
+    console.log("storedProductData", storedProductData);
+
     if (storedProductData) {
       setFormData({
         images: storedProductData.images,
         title: storedProductData.title,
         description: storedProductData.description,
         category: storedProductData.category,
+        brand: storedProductData.brand,
         price: storedProductData.price,
         salePrice: storedProductData.salePrice,
         totalStock: storedProductData.totalStock,
@@ -62,6 +69,7 @@ const AdminAdditems = () => {
   const handleSuccessToast = () => {
     toast.success("Product added successfully", {
       position: "top-center",
+      autoClose: 2000,
     });
   };
 
@@ -78,17 +86,20 @@ const AdminAdditems = () => {
         }
       });
     } else {
-      dispatch(addNewProduct({ ...formData, images: filteredImages })).then((data) => {
-        if (data?.payload?.success) {
-          dispatch(fetchAllProducts());
-          setImageFiles(Array(4).fill(null));
-          setUploadedImageUrls(Array(4).fill(""));
-          setFormData(initialFormData);
-          handleSuccessToast();
+      dispatch(addNewProduct({ ...formData, images: filteredImages })).then(
+        (data) => {
+          if (data?.payload?.success) {
+            dispatch(fetchAllProducts());
+            setImageFiles(Array(4).fill(null));
+            setUploadedImageUrls(Array(4).fill(""));
+            setFormData(initialFormData);
+            handleSuccessToast();
+          }
         }
-      });
+      );
     }
   };
+  console.log("formData", formData);
 
   return (
     <div className="py-4 px-4 md:px-8 w-full md:w-3/5">
