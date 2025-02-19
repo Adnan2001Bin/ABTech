@@ -1,6 +1,7 @@
 
 import { Outlet } from "react-router-dom";
 import ShoppingHeader from "./header";
+import Footer from "@/pages/shopping-view/Footer";
 
 function ShoppingLayout() {
   return (
@@ -11,6 +12,8 @@ function ShoppingLayout() {
           <Outlet />
         </main>
       </div>
+
+      <Footer />
     </div>
   );
 }

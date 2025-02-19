@@ -13,7 +13,7 @@ import AdminListItems from "./pages/admin-view/list-items";
 import AdminOrders from "./pages/admin-view/orders";
 import ShoppingLayout from "./components/shopping-view/layout";
 import NotFound from "./pages/Not-Found";
-import ShoppingAccount from "./pages/shopping-view/account";
+import ShoppingAccount from "./pages/shopping-view/Account";
 import ShoppingCheckout from "./pages/shopping-view/checkout";
 import ShoppingListing from "./pages/shopping-view/listing";
 import ShoppingHome from "./pages/shopping-view/home";
@@ -67,10 +67,10 @@ function App() {
     {
       path: "/",
       element: (
-        <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+        // <CheckAuth isAuthenticated={isAuthenticated} user={user}>
         <ShoppingLayout />
 
-        </CheckAuth>
+        // </CheckAuth>
 
       ),
       children: [

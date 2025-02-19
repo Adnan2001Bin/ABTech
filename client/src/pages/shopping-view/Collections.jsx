@@ -108,6 +108,8 @@ const Collections = () => {
   useEffect(() => {
     if (filters && Object.keys(filters).length > 0) {
       const createQueryString = createSearchParamsHelper(filters);
+      console.log("createQueryString",createQueryString);
+      
       setSearchParams(new URLSearchParams(createQueryString));
     }
   }, [filters]);

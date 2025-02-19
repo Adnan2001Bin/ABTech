@@ -15,6 +15,7 @@ import {
   LogOut,
   Search,
   ShoppingBag,
+  SquareUserRound,
   User,
   UserCog,
 } from "lucide-react";
@@ -77,11 +78,11 @@ const HeaderRightContent = () => {
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem
-                onClick={() => navigate("/my-profile")}
+                onClick={() => navigate("/account")}
                 className="cursor-pointer"
               >
-                <UserCog className="mr-2 h-4 w-4" />
-                My Profile
+              <SquareUserRound className="mr-2 h-6 w-6"/>
+                Account
               </DropdownMenuItem>
               <DropdownMenuSeparator />
 
