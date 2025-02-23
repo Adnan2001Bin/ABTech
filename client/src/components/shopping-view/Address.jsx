@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import CommonForm from '../common/form';
-import { addressFormControls } from '@/Config';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addNewAddress,
@@ -12,7 +10,9 @@ import {
 import AddressCard from './Address-Card';
 import { Button } from '@/components/ui/button';
 import { toast } from 'react-toastify';
-import { PlusCircle, Edit } from 'lucide-react';
+import { PlusCircle, Edit, Truck } from 'lucide-react';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
 
 const initialAddressFormData = {
   address: '',
@@ -118,17 +118,59 @@ const Address = ({ setCurrentSelectedAddress, selectedId }) => {
         )}
       </div>
       <CardContent className='space-y-3'>
-        <CardTitle className='text-xl font-semibold text-gray-800'>Add New Address</CardTitle>
-        <CommonForm
-          formData={formData}
-          formControls={addressFormControls}
-          setFormData={setFormData}
-          buttonText={currentEditedId !== null ? 'Edit' : 'Add'}
-          buttonIcon={currentEditedId !== null ? <Edit size={16} /> : <PlusCircle size={16} />}
-          inputClassName='outline outline-[2px] rounded-md p-2'
-          onSubmit={handleManageAddress}
-          isBtnDisabled={!isFormValid()}
-        />
+        <CardTitle className='text-xl font-semibold text-gray-800 flex items-center gap-2'>
+          <Truck className="w-5 h-5" />
+          {currentEditedId !== null ? 'Edit Address' : 'Add New Address'}
+        </CardTitle>
+        <form onSubmit={handleManageAddress} className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="address">Address</Label>
+              <Input
+                id="address"
+                placeholder="123 Main St"
+                value={formData.address}
+                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="city">City</Label>
+              <Input
+                id="city"
+                placeholder="New York"
+                value={formData.city}
+                onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="pincode">Pincode</Label>
+              <Input
+                id="pincode"
+                placeholder="10001"
+                value={formData.pincode}
+                onChange={(e) => setFormData({ ...formData, pincode: e.target.value })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone">Phone Number</Label>
+              <Input
+                id="phone"
+                placeholder="+1 234 567 890"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              />
+            </div>
+          </div>
+          <Button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg"
+            disabled={!isFormValid()}
+          >
+            {currentEditedId !== null ? 'Update Address' : 'Add Address'}
+          </Button>
+        </form>
       </CardContent>
     </Card>
   );

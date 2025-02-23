@@ -39,7 +39,7 @@ const NotFound = () => {
         <p className="text-gray-600">
           Maybe you mistyped the URL or the page has been moved.
         </p>
-        <Link to={"/shop"}>
+        <Link to={"/"}>
           <button className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition">
             Go Back Home
           </button>

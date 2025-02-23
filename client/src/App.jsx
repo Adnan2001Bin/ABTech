@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./store/auth-slice";
 import { Skeleton } from "./components/ui/skeleton";
@@ -24,6 +24,12 @@ import DailyDeals from "./pages/shopping-view/DailyDeals";
 import Contact from "./pages/shopping-view/Contact";
 import About from "./pages/shopping-view/About";
 import ProductDetails from "./components/shopping-view/Product-Details";
+import SuccessPage from "./pages/shopping-view/Payment-success";
+import ReturnPage from "./pages/shopping-view/Payment-return";
+import PaymentSuccessPage from "./pages/shopping-view/Payment-return";
+import Paymentfailed from "./pages/shopping-view/payment-failed";
+// import FailPage from "./pages/shopping-view/Payment-fail";
+// import CancelPage from "./pages/shopping-view/Payment-cancel";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -66,32 +72,20 @@ function App() {
     },
     {
       path: "/",
-      element: (
-        // <CheckAuth isAuthenticated={isAuthenticated} user={user}>
-        <ShoppingLayout />
-
-        // </CheckAuth>
-
-      ),
+      element: <ShoppingLayout />,
       children: [
         { path: "/", element: <ShoppingHome /> },
-        {
-          path: "account",
-          element: <ShoppingAccount />,
-        },
-        {
-          path: "checkout",
-          element: (
-              <ShoppingCheckout />
-          ),
-        },
-        { path: "listing", element: <ShoppingListing /> },
-        { path: "collections", element: <Collections /> },
-        { path: "product/:id", element: <ProductDetails /> },
-        { path: "dailydeals", element: <DailyDeals /> },
-        { path: "contact", element: <Contact /> },
-        { path: "about", element: <About /> },
-
+      { path: "account", element: <ShoppingAccount /> },
+      { path: "checkout", element: <ShoppingCheckout /> },
+      { path: "listing", element: <ShoppingListing /> },
+      { path: "collections", element: <Collections /> },
+      { path: "product/:id", element: <ProductDetails /> },
+      { path: "dailydeals", element: <DailyDeals /> },
+      { path: "contact", element: <Contact /> },
+      { path: "about", element: <About /> },
+      { path: "sslcommerz-success", element: <PaymentSuccessPage /> }, // Use PaymentSuccessPage here
+      { path: "success", element: <SuccessPage /> }, // Success page for displaying success message
+      { path: "sslcommerz-fail", element: <Paymentfailed /> },
       ],
     },
     { path: "*", element: <NotFound /> },

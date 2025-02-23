@@ -38,12 +38,12 @@ function UserCartWrapper({ cartItems, setOpenCartSheet }) {
         <div className="mt-4 space-y-4">
           <div className="flex justify-between">
             <span className="font-bold">Total</span>
-            <span className="font-bold">TK{totalCartAmount}</span>
+            <span className="font-bold">TK{totalCartAmount.toFixed(2)}</span>
           </div>
         </div>
         <Button
           onClick={() => {
-            navigate('/shop/checkout');
+            navigate('/checkout');
             setOpenCartSheet(false);
           }}
           className="w-full mt-4"
