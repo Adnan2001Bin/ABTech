@@ -7,25 +7,25 @@ import { Skeleton } from "./components/ui/skeleton";
 import AuthLayout from "./components/auth/layout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import AdminLayout from "./components/Layout";
+import AdminLayout from "./components/admin-view/Layout";
 import AdminAdditems from "./pages/admin-view/add-items";
 import AdminListItems from "./pages/admin-view/list-items";
 import AdminOrders from "./pages/admin-view/orders";
 import ShoppingLayout from "./components/shopping-view/layout";
 import NotFound from "./pages/Not-Found";
-import ShoppingAccount from "./shopping-view/Account";
-import ShoppingCheckout from "./shopping-view/checkout";
-import ShoppingHome from "./shopping-view/home";
+import ShoppingAccount from "./pages/shopping-view/Account";
+import ShoppingCheckout from "./pages/shopping-view/checkout";
+import ShoppingHome from "./pages/shopping-view/home";
 import UnauthPage from "./pages/unauth-page";
 import CheckAuth from "./components/common/Check-Auth";
-import Collections from "./shopping-view/Collections";
-import Contact from "./shopping-view/Contact";
-import About from "./shopping-view/About";
+import Collections from "./pages/shopping-view/Collections";
+import Contact from "./pages/shopping-view/Contact";
+import About from "./pages/shopping-view/About";
 import ProductDetails from "./components/shopping-view/Product-Details";
-import SuccessPage from "./shopping-view/Payment-success";
-import ReturnPage from "./shopping-view/Payment-return";
-import PaymentSuccessPage from "./shopping-view/Payment-return";
-import Paymentfailed from "./shopping-view/payment-failed";
+import SuccessPage from "./pages/shopping-view/Payment-success";
+import ReturnPage from "./pages/shopping-view/Payment-return";
+import PaymentSuccessPage from "./pages/shopping-view/Payment-return";
+import Paymentfailed from "./pages/shopping-view/payment-failed";
 
 
 function App() {
