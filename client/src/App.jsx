@@ -26,8 +26,7 @@ import SuccessPage from "./shopping-view/Payment-success";
 import ReturnPage from "./shopping-view/Payment-return";
 import PaymentSuccessPage from "./shopping-view/Payment-return";
 import Paymentfailed from "./shopping-view/payment-failed";
-// import FailPage from "./pages/shopping-view/Payment-fail";
-// import CancelPage from "./pages/shopping-view/Payment-cancel";
+
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
