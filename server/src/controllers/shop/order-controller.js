@@ -25,10 +25,10 @@ export const createOrder = async (req, res) => {
       total_amount: totalAmount,
       currency: "BDT",
       tran_id: `TXN_${Date.now()}`,
-      success_url: "http://localhost:3000/api/shop/order/sslcommerz-success", // Backend success route
-      fail_url: "http://localhost:3000/api/shop/order/sslcommerz-fail", // Backend fail route
-      cancel_url: "http://localhost:3000/api/shop/order/sslcommerz-cancel", // Backend cancel route
-      ipn_url: "http://localhost:3000/api/shop/order/sslcommerz-ipn", // Backend IPN route
+      success_url: "https://abtech-backend.onrender.com/api/shop/order/sslcommerz-success", // Backend success route
+      fail_url: "https://abtech-backend.onrender.com/api/shop/order/sslcommerz-fail", // Backend fail route
+      cancel_url: "https://abtech-backend.onrender.com/api/shop/order/sslcommerz-cancel", // Backend cancel route
+      ipn_url: "https://abtech-backend.onrender.com/api/shop/order/sslcommerz-ipn", // Backend IPN route
       shipping_method: "Courier", // Shipping method
       product_name: "Online Purchase", // Product name
       product_category: "General", // Product category
