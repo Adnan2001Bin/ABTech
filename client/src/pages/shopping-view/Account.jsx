@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import ShoppingOrders from '../components/shopping-view/Orders';
+import ShoppingOrders from '@/components/shopping-view/Orders';
 import Address from '@/components/shopping-view/Address';
 
 const ShoppingAccount = () => {
