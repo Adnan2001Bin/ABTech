@@ -5,6 +5,7 @@ import NewLaunchesCard from "./NewLaunchesCard";
 import { fetchAllProducts } from "@/store/admin/products-slice";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { toast } from "react-toastify";
+import forwardImg from "../../assets/fast-forward.png"
 
 const NewLaunches = () => {
   const { productList } = useSelector((state) => state.shopProducts);
@@ -42,7 +43,7 @@ const NewLaunches = () => {
           <span className="font-bold text-blue-700 text-sm sm:text-base">View all</span>
           <img
             className="w-4 h-4 sm:w-5 sm:h-5"
-            src="/src/assets/fast-forward.png"
+            src={forwardImg}
             alt="Fast Forward"
           />
         </Link>
