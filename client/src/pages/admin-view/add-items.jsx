@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ProductImageUpload from "@/components/admin-view/image-upload";
+import ProductImageUpload from "@/components/admin-view/Image-Upload";
 import CommonForm from "@/components/common/form";
 import { addProductFormElements } from "@/Config";
 import { addNewProduct, editProduct, fetchAllProducts } from "@/store/admin/products-slice";
