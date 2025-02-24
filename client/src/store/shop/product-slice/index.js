@@ -20,7 +20,7 @@ const initialState = {
       });
   
       const result = await axios.get(
-        `http://localhost:3000/api/shop/products/get?${query}`
+        `https://abtech-backend.onrender.com/api/shop/products/get?${query}`
       );
   
       console.log(result);
@@ -33,7 +33,7 @@ const initialState = {
     "/products/fetchProductDetails",
     async (id) => {
       const result = await axios.get(
-        `http://localhost:3000/api/shop/products/get/${id}`
+        `https://abtech-backend.onrender.com/api/shop/products/get/${id}`
       );
   
       return result?.data;

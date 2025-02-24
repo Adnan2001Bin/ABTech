@@ -10,7 +10,7 @@ export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async ({ userId, productId, quantity }) => {
     const response = await axios.post(
-      "http://localhost:3000/api/shop/cart/add",
+      "https://abtech-backend.onrender.com/api/shop/cart/add",
       {
         userId,
         productId,
@@ -26,7 +26,7 @@ export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
   async (userId) => {
     const response = await axios.get(
-      `http://localhost:3000/api/shop/cart/get/${userId}`
+      `https://abtech-backend.onrender.com/api/shop/cart/get/${userId}`
     );
 
     return response.data;
@@ -37,7 +37,7 @@ export const deleteCartItem = createAsyncThunk(
   "cart/deleteCartItem",
   async ({ userId, productId }, { dispatch }) => {
     const response = await axios.delete(
-      `http://localhost:3000/api/shop/cart/${userId}/${productId}`
+      `https://abtech-backend.onrender.com/api/shop/cart/${userId}/${productId}`
     );
 
     if (response.data.success) {
@@ -52,7 +52,7 @@ export const updateCartQuantity = createAsyncThunk(
   "cart/updateCartQuantity",
   async ({ userId, productId, quantity }) => {
     const response = await axios.put(
-      "http://localhost:3000/api/shop/cart/update-cart",
+      "https://abtech-backend.onrender.com/api/shop/cart/update-cart",
       {
         userId,
         productId,
