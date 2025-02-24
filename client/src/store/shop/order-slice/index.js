@@ -14,7 +14,7 @@ export const createNewOrder = createAsyncThunk(
   "/order/createNewOrder",
   async (orderData) => {
     const response = await axios.post(
-      "https://abtech-backend.onrender.com/api/shop/order/create",
+      "https://ab-tech-backend.vercel.app/api/shop/order/create",
       orderData
     );
 
@@ -37,7 +37,7 @@ export const capturePayment = createAsyncThunk(
   "/order/capturePayment",
   async ({ paymentId, payerId, orderId }, { dispatch }) => {
     const response = await axios.post(
-      "https://abtech-backend.onrender.com/api/shop/order/capture",
+      "https://ab-tech-backend.vercel.app/api/shop/order/capture",
       { paymentId, payerId, orderId }
     );
 
@@ -55,7 +55,7 @@ export const getAllOrdersByUserId = createAsyncThunk(
   "/order/getAllOrdersByUserId",
   async (userId) => {
     const response = await axios.get(
-      `https://abtech-backend.onrender.com/api/shop/order/list/${userId}`
+      `https://ab-tech-backend.vercel.app/api/shop/order/list/${userId}`
     );
 
     return response.data;
@@ -66,7 +66,7 @@ export const getOrderDetails = createAsyncThunk(
   "/order/getOrderDetails",
   async (id) => {
     const response = await axios.get(
-      `https://abtech-backend.onrender.com/api/shop/order/details/${id}`
+      `https://ab-tech-backend.vercel.app/api/shop/order/details/${id}`
     );
 
     return response.data;

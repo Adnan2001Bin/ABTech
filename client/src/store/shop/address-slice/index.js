@@ -10,7 +10,7 @@ export const addNewAddress = createAsyncThunk(
   "/addresses/addNewAddress",
   async (formData) => {
     const response = await axios.post(
-      "https://abtech-backend.onrender.com/api/shop/address/add",
+      "https://ab-tech-backend.vercel.app/api/shop/address/add",
       formData
     );
 
@@ -22,7 +22,7 @@ export const fetchAllAddresses = createAsyncThunk(
   "/addresses/fetchAllAddresses",
   async (userId) => {
     const response = await axios.get(
-      `https://abtech-backend.onrender.com/api/shop/address/get/${userId}`
+      `https://ab-tech-backend.vercel.app/api/shop/address/get/${userId}`
     );
 
     return response.data;
@@ -33,7 +33,7 @@ export const editaAddress = createAsyncThunk(
   "/addresses/editaAddress",
   async ({ userId, addressId, formData }) => {
     const response = await axios.put(
-      `https://abtech-backend.onrender.com/api/shop/address/update/${userId}/${addressId}`,
+      `https://ab-tech-backend.vercel.app/api/shop/address/update/${userId}/${addressId}`,
       formData
     );
 
@@ -45,7 +45,7 @@ export const deleteAddress = createAsyncThunk(
   "/addresses/deleteAddress",
   async ({ userId, addressId }) => {
     const response = await axios.delete(
-      `https://abtech-backend.onrender.com/api/shop/address/delete/${userId}/${addressId}`
+      `https://ab-tech-backend.vercel.app/api/shop/address/delete/${userId}/${addressId}`
     );
 
     return response.data;

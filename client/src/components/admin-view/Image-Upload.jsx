@@ -47,7 +47,7 @@ function ProductImageUpload({
 
     try {
       const response = await axios.post(
-        "https://abtech-backend.onrender.com/api/admin/products/upload-image",
+        "https://ab-tech-backend.vercel.app/api/admin/products/upload-image",
         data
       );
       if (response?.data?.success) {
