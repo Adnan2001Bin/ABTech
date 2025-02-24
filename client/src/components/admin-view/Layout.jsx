@@ -8,7 +8,7 @@ function AdminLayout() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
+     
       <AdminHeader setOpen={setSidebarOpen} />
       <div className="flex flex-1">
         {/* Sidebar */}
