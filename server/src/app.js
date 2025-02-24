@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true })); // Add this line
 
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: process.env.CORS_ORIGIN.split(","), // Split into an array
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: [
       "Content-Type",
@@ -27,6 +27,7 @@ app.use(
       "Pragma",
     ],
     credentials: true,
+    optionsSuccessStatus: 204, // Required for legacy browsers
   })
 );
 
