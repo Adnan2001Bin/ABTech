@@ -11,7 +11,7 @@ const ShoppingHeader = () => {
         <Link to="/" className="cursor-pointer">
           <img
             className="w-36 sm:w-40 lg:w-48 h-auto"
-            src="/src/assets/B-TECH.png"
+            src="src/assets/B-TECH.png"
             alt="Logo"
           />
         </Link>
