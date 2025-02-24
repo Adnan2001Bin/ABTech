@@ -5,8 +5,8 @@ import { checkAuth } from "./store/auth-slice";
 import { Skeleton } from "./components/ui/skeleton";
 
 import AuthLayout from "./components/auth/layout";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 import AdminLayout from "./components/admin-view/Layout";
 import AdminAdditems from "./pages/admin-view/add-items";
 import AdminListItems from "./pages/admin-view/list-items";
@@ -26,7 +26,8 @@ import SuccessPage from "./pages/shopping-view/Payment-success";
 import ReturnPage from "./pages/shopping-view/Payment-return";
 import PaymentSuccessPage from "./pages/shopping-view/Payment-return";
 import Paymentfailed from "./pages/shopping-view/payment-failed";
-
+// import FailPage from "./pages/shopping-view/Payment-fail";
+// import CancelPage from "./pages/shopping-view/Payment-cancel";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
