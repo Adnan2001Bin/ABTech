@@ -25,7 +25,7 @@ import ProductDetails from "./components/shopping-view/Product-Details";
 import SuccessPage from "./pages/shopping-view/Payment-success";
 import ReturnPage from "./pages/shopping-view/Payment-return";
 import PaymentSuccessPage from "./pages/shopping-view/Payment-return";
-import Paymentfailed from "./pages/shopping-view/payment-failed";
+import Paymentfailed from "./pages/shopping-view/Payment-failed";
 // import FailPage from "./pages/shopping-view/Payment-fail";
 // import CancelPage from "./pages/shopping-view/Payment-cancel";
 
