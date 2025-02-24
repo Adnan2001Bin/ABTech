@@ -122,11 +122,7 @@ export const userViewNavItems = [
     label: "Collections",
     path: "/collections",
   },
-  {
-    id: "dailyDeals",
-    label: "Daily Deals",
-    path: "/dailydeals",
-  },
+  
 
   {
     id: "about",

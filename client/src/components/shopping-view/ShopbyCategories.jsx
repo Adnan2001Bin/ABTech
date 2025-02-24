@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { fetchAllFilteredProducts } from "@/store/shop/product-slice";
 import earbudsImg from "../../assets/shop by catagories/earBuds.webp";
 import wirelessHeadphonesImg from "../../assets/shop by catagories/Wireless-Headphones_small.webp";
@@ -22,35 +22,13 @@ const ShopbyCategories = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [filters, setFilters] = useState({});
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleFilter = (categoryId) => {
-    let updatedFilters = { ...filters };
-
-    if (!updatedFilters.category) {
-      updatedFilters.category = [categoryId];
-    } else {
-      const index = updatedFilters.category.indexOf(categoryId);
-      if (index === -1) {
-        updatedFilters.category.push(categoryId);
-      } else {
-        updatedFilters.category.splice(index, 1);
-      }
-    }
-
+    let updatedFilters = { ...filters, category: [categoryId] };
     setFilters(updatedFilters);
     sessionStorage.setItem("filters", JSON.stringify(updatedFilters));
-
-    // Create query parameters
-    const queryParams = new URLSearchParams();
-    Object.keys(updatedFilters).forEach((key) => {
-      queryParams.append(key, updatedFilters[key].join(","));
-    });
-
-    // Redirect to Collections page with filters in URL
+    const queryParams = new URLSearchParams({ category: categoryId });
     navigate(`/collections?${queryParams.toString()}`);
-
-    // Dispatch action to fetch products (in case Collections page does not auto-fetch)
     dispatch(fetchAllFilteredProducts({ filterParams: updatedFilters }));
   };
 
@@ -60,19 +38,19 @@ const ShopbyCategories = () => {
   }, []);
 
   return (
-    <div className="flex flex-wrap justify-center gap-6 p-6 bg-gray-100">
+    <div className="flex flex-wrap justify-center gap-4 sm:gap-6 p-4 sm:p-6 bg-gray-100">
       {categories.map((category) => (
         <div
           key={category.id}
-          className="flex flex-col items-center bg-white shadow-md rounded-lg p-4 cursor-pointer hover:shadow-lg"
+          className="flex flex-col items-center bg-white shadow-md rounded-lg p-3 sm:p-4 cursor-pointer hover:shadow-lg transition-shadow duration-300 w-32 sm:w-36 lg:w-40"
           onClick={() => handleFilter(category.id)}
         >
           <img
             src={category.image}
             alt={category.title}
-            className="w-32 h-32 object-cover rounded-md"
+            className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 object-cover rounded-md"
           />
-          <p className="mt-2 font-semibold">{category.title}</p>
+          <p className="mt-2 font-semibold text-xs sm:text-sm lg:text-base">{category.title}</p>
         </div>
       ))}
     </div>

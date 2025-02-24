@@ -50,6 +50,46 @@ export default {
 			4: "hsl(var(--chart-4))",
 			5: "hsl(var(--chart-5))",
 		  },
+		  // Earthy Theme Colors (Previous)
+		  terracotta: {
+			600: "#D97706",
+		  },
+		  amber: {
+			50: "#FFFBEB",
+			100: "#FEF3C7",
+			200: "#FDE68A",
+			300: "#F59E0B",
+			700: "#B45309",
+		  },
+		  olive: {
+			100: "#D1D5DB",
+			800: "#1F2A44",
+		  },
+		  stone: {
+			50: "#F5F5F4",
+			100: "#E7E5E4",
+			200: "#D6D3D1",
+			400: "#A8A29E",
+			500: "#78716C",
+			600: "#57534E",
+			700: "#44403C",
+		  },
+		  // New Green Theme (Subtle, Not Too Bright)
+		  sage: {
+			50: "#F1F5F0",  // Very light sage for backgrounds
+			100: "#E2EAE2", // Subtle hover states
+			200: "#C4D3C4", // Light accent
+			300: "#A3BFA3", // Main sage for buttons
+			600: "#6B8E6B", // Deeper sage for headers
+		  },
+		  moss: {
+			100: "#D9DED1", // Light moss for status highlights
+			700: "#4A5A43", // Dark moss for text
+		  },
+		  forest: {
+			200: "#B7C4A8", // Soft forest green for accents
+			500: "#6B7A5E", // Mid-tone forest for totals
+		  },
 		},
 		// Add custom animation keyframes
 		keyframes: {

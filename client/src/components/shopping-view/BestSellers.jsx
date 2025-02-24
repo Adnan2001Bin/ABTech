@@ -5,48 +5,27 @@ import video3 from "../../assets/Best seller/quinn_OyJHanx4QSdUN3OVGTO7C.mp4";
 import video4 from "../../assets/Best seller/quinn_RUxbhR7CvjkNtlFUDxgw9.mp4";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { fetchAllFilteredProducts } from "@/store/shop/product-slice";
 
 const BestSellers = () => {
   const videoRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
-
   const bestSellersData = [
-    { title: "Earbuds", src: video1 },
-    { title: "Wireless Headphones", src: video2 },
-    { title: "Neckbands", src: video3 },
-    { title: "Watches", src: video4 },
+    { title: "Earbuds", src: video1, id: "earbuds" },
+    { title: "Wireless Headphones", src: video2, id: "wireless-headphones" },
+    { title: "Neckbands", src: video3, id: "neckbands" },
+    { title: "Watches", src: video4, id: "smartwatches" },
   ];
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [filters, setFilters] = useState({});
 
   const handleFilter = (categoryId) => {
     let updatedFilters = { ...filters };
-
-    if (!updatedFilters.category) {
-      updatedFilters.category = [categoryId];
-    } else {
-      const index = updatedFilters.category.indexOf(categoryId);
-      if (index === -1) {
-        updatedFilters.category.push(categoryId);
-      } else {
-        updatedFilters.category.splice(index, 1);
-      }
-    }
-
+    updatedFilters.category = [categoryId];
     setFilters(updatedFilters);
     sessionStorage.setItem("filters", JSON.stringify(updatedFilters));
-
-    // Create query parameters
-    const queryParams = new URLSearchParams();
-    Object.keys(updatedFilters).forEach((key) => {
-      queryParams.append(key, updatedFilters[key].join(","));
-    });
-
-    // Redirect to Collections page with filters in URL
+    const queryParams = new URLSearchParams({ category: categoryId });
     navigate(`/collections?${queryParams.toString()}`);
-
-    // Dispatch action to fetch products (in case Collections page does not auto-fetch)
     dispatch(fetchAllFilteredProducts({ filterParams: updatedFilters }));
   };
 
@@ -64,25 +43,24 @@ const BestSellers = () => {
   };
 
   return (
-    <div className="px-4 sm:px-10 lg:px-20">
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+    <div className="px-4 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {bestSellersData.map((item, index) => (
           <div
             key={index}
-            className="group overflow-hidden rounded-lg shadow-lg"
+            className="group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
             onClick={() => handleFilter(item.id)}
           >
             <video
               ref={videoRefs[index]}
-              className="w-full h-64 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
+              className="w-full h-48 sm:h-56 lg:h-64 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
               src={item.src}
               loop
               muted
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={() => handleMouseLeave(index)}
-            ></video>
-            <p className="text-center text-lg font-semibold mt-2">
+            />
+            <p className="text-center text-sm sm:text-lg font-semibold mt-2 sm:mt-3">
               {item.title}
             </p>
           </div>

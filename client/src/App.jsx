@@ -15,12 +15,10 @@ import ShoppingLayout from "./components/shopping-view/layout";
 import NotFound from "./pages/Not-Found";
 import ShoppingAccount from "./pages/shopping-view/Account";
 import ShoppingCheckout from "./pages/shopping-view/checkout";
-import ShoppingListing from "./pages/shopping-view/listing";
 import ShoppingHome from "./pages/shopping-view/home";
 import UnauthPage from "./pages/unauth-page";
 import CheckAuth from "./components/common/Check-Auth";
 import Collections from "./pages/shopping-view/Collections";
-import DailyDeals from "./pages/shopping-view/DailyDeals";
 import Contact from "./pages/shopping-view/Contact";
 import About from "./pages/shopping-view/About";
 import ProductDetails from "./components/shopping-view/Product-Details";
@@ -77,10 +75,8 @@ function App() {
         { path: "/", element: <ShoppingHome /> },
       { path: "account", element: <ShoppingAccount /> },
       { path: "checkout", element: <ShoppingCheckout /> },
-      { path: "listing", element: <ShoppingListing /> },
       { path: "collections", element: <Collections /> },
       { path: "product/:id", element: <ProductDetails /> },
-      { path: "dailydeals", element: <DailyDeals /> },
       { path: "contact", element: <Contact /> },
       { path: "about", element: <About /> },
       { path: "sslcommerz-success", element: <PaymentSuccessPage /> }, // Use PaymentSuccessPage here

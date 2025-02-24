@@ -4,29 +4,28 @@ import { NavLink } from "react-router-dom";
 
 const NavItems = () => {
   return (
-    <nav className="flex flex-col mb-3 lg:mb-0 lg:items-center gap-10 lg:flex-row relative">
+    <nav className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 lg:gap-8">
       {userViewNavItems.map((navItem) => (
-        <div key={navItem.id} className="hidden h-8 md:flex items-start gap-5">
-          <NavLink
-            to={navItem.path}
-            className={({ isActive }) =>
-              `flex flex-col items-center gap-1 ${
-                isActive ? "font-extrabold" : "text-gray-700"
-              }`
-            }
-          >
-            {({ isActive }) => (
-              <>
-                <p className="text-sm font-semibold ">{navItem.label}</p>
-                <hr
-                  className={`w-2/4 border-none h-0.5 bg-gray-700 ${
-                    isActive ? "animate-slideIn" : "opacity-0"
-                  }`}
-                />
-              </>
-            )}
-          </NavLink>
-        </div>
+        <NavLink
+          key={navItem.id}
+          to={navItem.path}
+          className={({ isActive }) =>
+            `flex flex-col items-center gap-1 text-xs sm:text-sm font-semibold ${
+              isActive ? "text-blue-600 font-bold" : "text-gray-700 hover:text-blue-500"
+            }`
+          }
+        >
+          {({ isActive }) => (
+            <>
+              <span>{navItem.label}</span>
+              <hr
+                className={`w-2/4 border-none h-0.5 bg-blue-600 ${
+                  isActive ? "opacity-100" : "opacity-0"
+                } transition-opacity duration-300`}
+              />
+            </>
+          )}
+        </NavLink>
       ))}
     </nav>
   );
