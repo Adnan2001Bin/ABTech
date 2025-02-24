@@ -10,7 +10,7 @@ export const addNewProduct = createAsyncThunk(
   "/products/addnewproduct",
   async (formData) => {
     const result = await axios.post(
-      "https://abtech-backend.onrender.com/api/admin/products/add",
+      "https://ab-tech-backend.vercel.app/api/admin/products/add",
       formData,
       {
         headers: {
@@ -27,7 +27,7 @@ export const fetchAllProducts = createAsyncThunk(
     "/products/fetchAllProducts",
     async () => {
       const result = await axios.get(
-        "https://abtech-backend.onrender.com/api/admin/products/get"
+        "https://ab-tech-backend.vercel.app/api/admin/products/get"
       );
   
       return result?.data;
@@ -40,7 +40,7 @@ export const editProduct = createAsyncThunk(
   "/products/editProduct",
   async ({ id, formData }) => {
     const result = await axios.put(
-      `https://abtech-backend.onrender.com/api/admin/products/edit/${id}`,
+      `https://ab-tech-backend.vercel.app/api/admin/products/edit/${id}`,
       formData,
       {
         headers: {
@@ -57,7 +57,7 @@ export const deleteProduct = createAsyncThunk(
   "/products/deleteProduct",
   async (id) => {
     const result = await axios.delete(
-      `https://abtech-backend.onrender.com/api/admin/products/delete/${id}`
+      `https://ab-tech-backend.vercel.app/api/admin/products/delete/${id}`
     );
 
     return result?.data;
