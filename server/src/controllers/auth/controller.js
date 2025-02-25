@@ -58,12 +58,14 @@ export const registerUser = async (req, res) => {
     const token = createToken(newUser);
 
     // Set cookie
+
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h"),
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h")
     });
+
 
     // Send welcome email
     await sendEmail({
@@ -119,8 +121,8 @@ export const loginUser = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h"),
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h")
     });
 
     res.status(200).json({
