@@ -47,7 +47,7 @@ function ProductImageUpload({
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/admin/products/upload-image",
+        "https://ab-tech-d27g.vercel.app/api/admin/products/upload-image",
         data
       );
       if (response?.data?.success) {
