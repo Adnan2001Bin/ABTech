@@ -24,7 +24,7 @@ router.post("/sslcommerz-fail", (req, res) => {
 router.post("/sslcommerz-cancel", (req, res) => {
   const { tran_id } = req.body;
   console.log("Payment canceled. Transaction ID:", tran_id);
-  // res.redirect(`http://localhost:6500/sslcommerz-cancel`);
+  // res.redirect(`http://localhost:6500/sslcommerz-cancel`);https://ab-tech-five.vercel.app/
   res.redirect(`https://ab-tech-five.vercel.app/sslcommerz-cancel`);
 });
 
