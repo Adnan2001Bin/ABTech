@@ -15,25 +15,47 @@ const app = express();
 // Middleware to parse URL-encoded data
 app.use(express.urlencoded({ extended: true })); // Add this line
 
+// app.use(
+//   cors({
+//     origin: process.env.CORS_ORIGIN.split(","), // Split into an array
+//     methods: ["GET", "POST", "DELETE", "PUT"],
+//     allowedHeaders: [
+//       "Content-Type",
+//       "Authorization",
+//       "Cache-Control",
+//       "Expires",
+//       "Pragma",
+//     ],
+//     credentials: true,
+//     optionsSuccessStatus: 204, // Required for legacy browsers
+//   })
+// );
+
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN.split(","), // Split into an array
-    methods: ["GET", "POST", "DELETE", "PUT"],
+    origin: process.env.CORS_ORIGIN.split(",") || [
+      "http://localhost:6500",
+      "https://ab-tech-chi.vercel.app"
+    ],
+    methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
     allowedHeaders: [
       "Content-Type",
       "Authorization",
       "Cache-Control",
       "Expires",
       "Pragma",
+      "X-Requested-With"
     ],
     credentials: true,
-    optionsSuccessStatus: 204, // Required for legacy browsers
+    optionsSuccessStatus: 204
   })
 );
 
 app.use(express.json()); // Parse JSON data
 app.use(cookieParser());
 
+// Handle preflight requests
+app.options("*", cors());
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/admin/products", adminProductsRouter);
