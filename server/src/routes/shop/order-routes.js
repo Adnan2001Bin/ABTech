@@ -11,20 +11,20 @@ router.post("/sslcommerz-success", (req, res) => {
   console.log("Request Body:", req.body);
   const { tran_id, val_id, paymentId, payerId } = req.body;
   res.redirect(
-    `${process.env.CORS_ORIGIN}/success?tran_id=${tran_id}&val_id=${val_id}&paymentId=${paymentId}&payerId=${payerId}`
+    `http://localhost:6500/success?tran_id=${tran_id}&val_id=${val_id}&paymentId=${paymentId}&payerId=${payerId}`
   );
 });
 
 router.post("/sslcommerz-fail", (req, res) => {
   const { tran_id } = req.body;
   console.log("Payment failed. Transaction ID:", tran_id);
-  res.redirect(`${process.env.CORS_ORIGIN}/sslcommerz-fail`);
+  res.redirect(`http://localhost:6500/sslcommerz-fail`);
 });
 
 router.post("/sslcommerz-cancel", (req, res) => {
   const { tran_id } = req.body;
   console.log("Payment canceled. Transaction ID:", tran_id);
-  res.redirect(`${process.env.CORS_ORIGIN}/sslcommerz-cancel`);
+  res.redirect(`http://localhost:6500/sslcommerz-cancel`);
 });
 
 router.post("/sslcommerz-ipn", (req, res) => {

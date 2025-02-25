@@ -20,7 +20,7 @@ const initialState = {
       });
   
       const result = await axios.get(
-        `https://ab-tech-backend.vercel.app/api/shop/products/get?${query}`
+        `http://localhost:3000/api/shop/products/get?${query}`
       );
   
       console.log(result);
@@ -33,7 +33,7 @@ const initialState = {
     "/products/fetchProductDetails",
     async (id) => {
       const result = await axios.get(
-        `https://ab-tech-backend.vercel.app/api/shop/products/get/${id}`
+        `http://localhost:3000/api/shop/products/get/${id}`
       );
   
       return result?.data;

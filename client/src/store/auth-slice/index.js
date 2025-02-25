@@ -11,7 +11,7 @@ export const registerUser = createAsyncThunk(
   "/auth/register",
   async (formdata) => {
     const response = await axios.post(
-      "https://ab-tech-backend.vercel.app/api/auth/register",
+      "http://localhost:3000/api/auth/register",
       formdata,
       {
         withCredentials: true,
@@ -26,7 +26,7 @@ export const loginUser = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "https://ab-tech-backend.vercel.app/api/auth/login",
+        "http://localhost:3000/api/auth/login",
         formData,
         {
           withCredentials: true,
@@ -45,7 +45,7 @@ export const logoutUser = createAsyncThunk(
 
   async () => {
     const response = await axios.post(
-      "https://ab-tech-backend.vercel.app/api/auth/logout",
+      "http://localhost:3000/api/auth/logout",
       {},
       {
         withCredentials: true,
@@ -62,7 +62,7 @@ export const checkAuth = createAsyncThunk(
 
   async () => {
     const response = await axios.get(
-      "https://ab-tech-backend.vercel.app/api/auth/is-auth",
+      "http://localhost:3000/api/auth/is-auth",
       {
         withCredentials: true,
         headers: {
