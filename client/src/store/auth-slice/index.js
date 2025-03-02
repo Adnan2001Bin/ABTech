@@ -11,7 +11,7 @@ export const registerUser = createAsyncThunk(
   "/auth/register",
   async (formdata) => {
     const response = await axios.post(
-      "https://ab-tech-d27g.vercel.app/api/auth/register",
+      `${import.meta.env.VITE_API_BASE_URL}/api/auth/register`, 
       formdata,
       {
         withCredentials: true,
@@ -26,7 +26,7 @@ export const loginUser = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "https://ab-tech-d27g.vercel.app/api/auth/login",
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/login`,
         formData,
         {
           withCredentials: true,
@@ -42,27 +42,23 @@ export const loginUser = createAsyncThunk(
 
 export const logoutUser = createAsyncThunk(
   "/auth/logout",
-
   async () => {
     const response = await axios.post(
-      "https://ab-tech-d27g.vercel.app/api/auth/logout",
+      `${import.meta.env.VITE_API_BASE_URL}/api/auth/logout`, 
       {},
       {
         withCredentials: true,
       }
     );
-
     return response.data;
   }
 );
 
-
 export const checkAuth = createAsyncThunk(
   "/auth/checkauth",
-
   async () => {
     const response = await axios.get(
-      "https://ab-tech-d27g.vercel.app/api/auth/is-auth",
+      `${import.meta.env.VITE_API_BASE_URL}/api/auth/is-auth`, 
       {
         withCredentials: true,
         headers: {
@@ -71,7 +67,6 @@ export const checkAuth = createAsyncThunk(
         },
       }
     );
-
     return response.data;
   }
 );

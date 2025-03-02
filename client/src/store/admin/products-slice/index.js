@@ -10,7 +10,7 @@ export const addNewProduct = createAsyncThunk(
   "/products/addnewproduct",
   async (formData) => {
     const result = await axios.post(
-      "https://ab-tech-d27g.vercel.app/api/admin/products/add",
+      `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/add`,
       formData,
       {
         headers: {
@@ -24,23 +24,21 @@ export const addNewProduct = createAsyncThunk(
 );
 
 export const fetchAllProducts = createAsyncThunk(
-    "/products/fetchAllProducts",
-    async () => {
-      const result = await axios.get(
-        "https://ab-tech-d27g.vercel.app/api/admin/products/get"
-      );
-  
-      return result?.data;
-    }
-  );
+  "/products/fetchAllProducts",
+  async () => {
+    const result = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/get`
+    );
 
+    return result?.data;
+  }
+);
 
-  
 export const editProduct = createAsyncThunk(
   "/products/editProduct",
   async ({ id, formData }) => {
     const result = await axios.put(
-      `https://ab-tech-d27g.vercel.app/api/admin/products/edit/${id}`,
+      `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/edit/${id}`,
       formData,
       {
         headers: {
@@ -57,7 +55,7 @@ export const deleteProduct = createAsyncThunk(
   "/products/deleteProduct",
   async (id) => {
     const result = await axios.delete(
-      `https://ab-tech-d27g.vercel.app/api/admin/products/delete/${id}`
+      `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/delete/${id}`
     );
 
     return result?.data;

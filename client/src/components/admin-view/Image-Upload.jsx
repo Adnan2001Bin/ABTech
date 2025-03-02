@@ -47,7 +47,7 @@ function ProductImageUpload({
 
     try {
       const response = await axios.post(
-        "https://ab-tech-d27g.vercel.app/api/admin/products/upload-image",
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/upload-image`,
         data
       );
       if (response?.data?.success) {

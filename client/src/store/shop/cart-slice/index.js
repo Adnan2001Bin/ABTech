@@ -10,7 +10,7 @@ export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async ({ userId, productId, quantity }) => {
     const response = await axios.post(
-      "https://ab-tech-d27g.vercel.app/api/shop/cart/add",
+      `${import.meta.env.VITE_API_BASE_URL}/api/shop/cart/add`,
       {
         userId,
         productId,
@@ -26,7 +26,7 @@ export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
   async (userId) => {
     const response = await axios.get(
-      `https://ab-tech-d27g.vercel.app/api/shop/cart/get/${userId}`
+      `${import.meta.env.VITE_API_BASE_URL}/api/shop/cart/get/${userId}`
     );
 
     return response.data;
@@ -37,7 +37,7 @@ export const deleteCartItem = createAsyncThunk(
   "cart/deleteCartItem",
   async ({ userId, productId }, { dispatch }) => {
     const response = await axios.delete(
-      `https://ab-tech-d27g.vercel.app/api/shop/cart/${userId}/${productId}`
+      `${import.meta.env.VITE_API_BASE_URL}/api/shop/cart/${userId}/${productId}`
     );
 
     if (response.data.success) {
@@ -52,7 +52,7 @@ export const updateCartQuantity = createAsyncThunk(
   "cart/updateCartQuantity",
   async ({ userId, productId, quantity }) => {
     const response = await axios.put(
-      "https://ab-tech-d27g.vercel.app/api/shop/cart/update-cart",
+      `${import.meta.env.VITE_API_BASE_URL}/api/shop/cart/update-cart`,
       {
         userId,
         productId,

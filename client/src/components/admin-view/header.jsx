@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Button } from "../ui/button";
 import { AlignJustify, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/B-TECH.png"
 
 function AdminHeader({ setOpen }) {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ function AdminHeader({ setOpen }) {
         <div onClick={() => navigate("/admin/additems")} className="cursor-pointer">
           <img
             className="w-28 sm:w-32 md:w-40"
-            src="/src/assets/AB-TECH.png"
+            src={logo}
             alt="Logo"
           />
         </div>

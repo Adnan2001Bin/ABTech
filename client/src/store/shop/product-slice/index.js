@@ -20,7 +20,7 @@ const initialState = {
       });
   
       const result = await axios.get(
-        `https://ab-tech-d27g.vercel.app/api/shop/products/get?${query}`
+        `${import.meta.env.VITE_API_BASE_URL}/api/shop/products/get?${query}`
       );
   
       console.log(result);
@@ -33,7 +33,7 @@ const initialState = {
     "/products/fetchProductDetails",
     async (id) => {
       const result = await axios.get(
-        `https://ab-tech-d27g.vercel.app/api/shop/products/get/${id}`
+        `${import.meta.env.VITE_API_BASE_URL}/api/shop/products/get/${id}`
       );
   
       return result?.data;

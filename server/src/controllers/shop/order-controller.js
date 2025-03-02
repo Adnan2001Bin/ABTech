@@ -1,7 +1,7 @@
 import { initializeSSLCommerzPayment } from "../../helpers/sslcommerz.js";
 import { Order } from "../../models/Order.js";
 import { Product } from "../../models/Product.js";
-import {Cart}  from "../../models/Cart.js"
+import { Cart } from "../../models/Cart.js";
 
 export const createOrder = async (req, res) => {
   try {
@@ -25,10 +25,10 @@ export const createOrder = async (req, res) => {
       total_amount: totalAmount,
       currency: "BDT",
       tran_id: `TXN_${Date.now()}`,
-      success_url: "https://ab-tech-d27g.vercel.app/api/shop/order/sslcommerz-success", // Backend success route
-      fail_url: "https://ab-tech-d27g.vercel.app/api/shop/order/sslcommerz-fail", // Backend fail route
-      cancel_url: "https://ab-tech-d27g.vercel.app/api/shop/order/sslcommerz-cancel", // Backend cancel route
-      ipn_url: "https://ab-tech-d27g.vercel.app/api/shop/order/sslcommerz-ipn", // Backend IPN route
+      success_url: `${process.env.baseUrl}/api/shop/order/sslcommerz-success`,
+      fail_url: `${process.env.baseUrl}/api/shop/order/sslcommerz-fail`,
+      cancel_url: `${process.env.baseUrl}/api/shop/order/sslcommerz-cancel`,
+      ipn_url: `${process.env.baseUrl}/api/shop/order/sslcommerz-ipn`,
       shipping_method: "Courier", // Shipping method
       product_name: "Online Purchase", // Product name
       product_category: "General", // Product category
@@ -89,7 +89,9 @@ export const capturePayment = async (req, res) => {
 
     let order = await Order.findById(orderId);
     if (!order) {
-      return res.status(404).json({ success: false, message: "Order not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Order not found" });
     }
 
     order.paymentStatus = "paid";
@@ -100,7 +102,12 @@ export const capturePayment = async (req, res) => {
     for (let item of order.cartItems) {
       let product = await Product.findById(item.productId);
       if (!product) {
-        return res.status(404).json({ success: false, message: `Product not found: ${item.title}` });
+        return res
+          .status(404)
+          .json({
+            success: false,
+            message: `Product not found: ${item.title}`,
+          });
       }
       product.totalStock -= item.quantity;
       await product.save();
@@ -121,7 +128,6 @@ export const capturePayment = async (req, res) => {
     res.status(500).json({ success: false, message: "Some error occurred!" });
   }
 };
-
 
 export const getAllOrdersByUser = async (req, res) => {
   try {

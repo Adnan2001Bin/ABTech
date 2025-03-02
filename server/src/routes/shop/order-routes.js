@@ -11,21 +11,20 @@ router.post("/sslcommerz-success", (req, res) => {
   console.log("Request Body:", req.body);
   const { tran_id, val_id, paymentId, payerId } = req.body;
   res.redirect(
-    `https://ab-tech-five.vercel.app/success?tran_id=${tran_id}&val_id=${val_id}&paymentId=${paymentId}&payerId=${payerId}`
+    `${process.env.CORS_ORIGIN}/success?tran_id=${tran_id}&val_id=${val_id}&paymentId=${paymentId}&payerId=${payerId}`
   );
 });
 
 router.post("/sslcommerz-fail", (req, res) => {
   const { tran_id } = req.body;
   console.log("Payment failed. Transaction ID:", tran_id);
-  res.redirect(`https://ab-tech-five.vercel.app/sslcommerz-fail`);
+  res.redirect(`${process.env.CORS_ORIGIN}/sslcommerz-fail`);
 });
 
 router.post("/sslcommerz-cancel", (req, res) => {
   const { tran_id } = req.body;
   console.log("Payment canceled. Transaction ID:", tran_id);
-  // res.redirect(`http://localhost:6500/sslcommerz-cancel`);https://ab-tech-five.vercel.app/
-  res.redirect(`https://ab-tech-five.vercel.app/sslcommerz-cancel`);
+  res.redirect(`${process.env.CORS_ORIGIN}/sslcommerz-cancel`);
 });
 
 router.post("/sslcommerz-ipn", (req, res) => {
