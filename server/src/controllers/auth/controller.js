@@ -61,11 +61,10 @@ export const registerUser = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h")
+      secure: true, // Always true for HTTPS (Vercel)
+      sameSite: "none", // Cross-origin compatibility
+      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h"),
     });
-
 
     // Send welcome email
     await sendEmail({
@@ -120,9 +119,9 @@ export const loginUser = async (req, res) => {
     // Set cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h")
+      secure: true, // Always true for HTTPS (Vercel)
+      sameSite: "none", // Cross-origin compatibility
+      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h"),
     });
 
     res.status(200).json({
