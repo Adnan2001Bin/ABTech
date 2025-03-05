@@ -63,7 +63,8 @@ export const registerUser = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h")
+      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h"),
+      domain: process.env.NODE_ENV === "production" ? ".ab-tech-three.vercel.app" : undefined
     });
 
 
@@ -122,7 +123,8 @@ export const loginUser = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h")
+      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h"),
+      domain: process.env.NODE_ENV === "production" ? ".ab-tech-three.vercel.app" : undefined
     });
 
     res.status(200).json({
