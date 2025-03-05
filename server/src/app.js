@@ -35,7 +35,7 @@ app.use(
   cors({
     origin: process.env.CORS_ORIGIN.split(",") || [
       "http://localhost:6500",
-      "https://ab-tech-chi.vercel.app"
+      "https://ab-tech-three.vercel.app"
     ],
     methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
     allowedHeaders: [
@@ -52,6 +52,7 @@ app.use(
 );
 
 app.use(express.json()); // Parse JSON data
+app.set('trust proxy', 1);
 app.use(cookieParser());
 
 // Handle preflight requests

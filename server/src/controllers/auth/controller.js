@@ -59,14 +59,13 @@ export const registerUser = async (req, res) => {
 
     // Set cookie
 
-    const domain = req.headers.host.split(":")[0]; // Extract domain without port
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      domain: domain,
-      maxAge: ms(process.env.ACCESSTOKEN_EXPIRY || "1h"),
+      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h")
     });
+
 
     // Send welcome email
     await sendEmail({
@@ -119,13 +118,11 @@ export const loginUser = async (req, res) => {
     const token = createToken(user);
 
     // Set cookie
-    const domain = req.headers.host.split(":")[0]; // Extract domain without port
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      domain: domain,
-      maxAge: ms(process.env.ACCESSTOKEN_EXPIRY || "1h"),
+      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h")
     });
 
     res.status(200).json({
@@ -157,9 +154,7 @@ export const logoutUser = (req, res) => {
       sameSite: "strict",
     });
 
-    res
-      .status(200)
-      .json({ success: true, message: "Logged out successfully." });
+    res.status(200).json({ success: true, message: "Logged out successfully." });
   } catch (error) {
     console.error("Error during logout:", error);
     res.status(500).json({
@@ -216,9 +211,7 @@ export const verifyEmail = async (req, res) => {
 
     const user = await User.findById(userId);
     if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found." });
+      return res.status(404).json({ success: false, message: "User not found." });
     }
 
     if (!user.verifyOtp || user.verifyOtp !== otp) {
@@ -226,9 +219,7 @@ export const verifyEmail = async (req, res) => {
     }
 
     if (user.verifyOtpExpireAt < Date.now()) {
-      return res
-        .status(400)
-        .json({ success: false, message: "OTP has expired." });
+      return res.status(400).json({ success: false, message: "OTP has expired." });
     }
 
     user.isAccountVerified = true;
@@ -246,6 +237,7 @@ export const verifyEmail = async (req, res) => {
   }
 };
 
+
 export const sendResetOtp = async (req, res) => {
   try {
     const { email } = req.body;
@@ -254,9 +246,7 @@ export const sendResetOtp = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found." });
+      return res.status(404).json({ success: false, message: "User not found." });
     }
 
     // Generate OTP
@@ -283,6 +273,7 @@ export const sendResetOtp = async (req, res) => {
   }
 };
 
+
 export const resetPassword = async (req, res) => {
   try {
     const { email, otp, newPassword } = req.body;
@@ -291,9 +282,7 @@ export const resetPassword = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found." });
+      return res.status(404).json({ success: false, message: "User not found." });
     }
 
     if (!user.resetOtp || user.resetOtp !== otp) {
@@ -301,9 +290,7 @@ export const resetPassword = async (req, res) => {
     }
 
     if (user.resetOtpExpireAt < Date.now()) {
-      return res
-        .status(400)
-        .json({ success: false, message: "OTP has expired." });
+      return res.status(400).json({ success: false, message: "OTP has expired." });
     }
 
     // Hash new password
@@ -317,37 +304,28 @@ export const resetPassword = async (req, res) => {
     console.error("Error during password reset:", error);
     res.status(500).json({
       success: false,
-      message:
-        error.message || "An error occurred while resetting the password.",
+      message: error.message || "An error occurred while resetting the password.",
     });
   }
 };
 
+
 export const isAuthenticated = async (req, res) => {
   try {
-    const token = req.cookies.token;
+    const token = req.cookies?.token || req.headers.authorization?.split(" ")[1];
     if (!token) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Not authenticated." });
+      return res.status(401).json({ success: false, message: "Not authenticated." });
     }
 
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_TOKEN_SECRET || "default_secret"
-    );
+    const decoded = jwt.verify(token, process.env.JWT_TOKEN_SECRET || "default_secret");
     if (!decoded) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Invalid token." });
+      return res.status(401).json({ success: false, message: "Invalid token." });
     }
 
     // Fetch user details
     const user = await User.findById(decoded.id).select("-password");
     if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found." });
+      return res.status(404).json({ success: false, message: "User not found." });
     }
 
     res.json({ success: true, message: "User is authenticated.", user });
@@ -355,8 +333,7 @@ export const isAuthenticated = async (req, res) => {
     console.error("Error during authentication check:", error);
     res.status(500).json({
       success: false,
-      message:
-        error.message || "An error occurred during authentication check.",
+      message: error.message || "An error occurred during authentication check.",
     });
   }
 };
