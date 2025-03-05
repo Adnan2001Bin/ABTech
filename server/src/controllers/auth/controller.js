@@ -62,10 +62,11 @@ export const registerUser = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h"),
-      domain: process.env.NODE_ENV === "production" ? ".ab-tech-three.vercel.app" : undefined
+      sameSite: "lax", // Fixed for same-domain requests
+      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h")
+      // Domain removed unless subdomains are confirmed
     });
+
 
 
     // Send welcome email
@@ -97,7 +98,6 @@ export const loginUser = async (req, res) => {
 
     validateFields(["email", "password"], req.body);
 
-    // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({
@@ -106,7 +106,6 @@ export const loginUser = async (req, res) => {
       });
     }
 
-    // Validate password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({
@@ -115,16 +114,14 @@ export const loginUser = async (req, res) => {
       });
     }
 
-    // Generate token
     const token = createToken(user);
 
-    // Set cookie
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h"),
-      domain: process.env.NODE_ENV === "production" ? ".ab-tech-three.vercel.app" : undefined
+      sameSite: "lax", // Fixed for same-domain requests
+      maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h")
+      // Domain removed unless subdomains are confirmed
     });
 
     res.status(200).json({
