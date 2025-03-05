@@ -26,6 +26,7 @@ import SuccessPage from "./pages/shopping-view/Payment-success";
 import ReturnPage from "./pages/shopping-view/Payment-return";
 import PaymentSuccessPage from "./pages/shopping-view/Payment-return";
 import Paymentfailed from "./pages/shopping-view/Payment-failed";
+import Loader from "./components/Loader/Loader";
 // import FailPage from "./pages/shopping-view/Payment-fail";
 // import CancelPage from "./pages/shopping-view/Payment-cancel";
 
@@ -39,7 +40,7 @@ function App() {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  if (isLoading) return <Skeleton className="w-[800px] bg-black h-[600px]" />;
+  if (isLoading) return <Loader />;
 
   const router = createBrowserRouter([
     {
