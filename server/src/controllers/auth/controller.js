@@ -98,6 +98,7 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+    
 
     validateFields(["email", "password"], req.body);
 
@@ -119,15 +120,14 @@ export const loginUser = async (req, res) => {
 
     const token = createToken(user);
 
-    // Set cookie after login or registration
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // Set to true in production
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Use "none" in production
-      domain:
-        process.env.NODE_ENV === "production"
-          ? "ab-tech-three.vercel.app"
-          : "localhost", // Set domain for production
+      // domain:
+      //   process.env.NODE_ENV === "production"
+      //     ? "ab-tech-three.vercel.app"
+      //     : "localhost", // Set domain for production
       path: "/", // Ensure the path is correct
       maxAge: ms(process.env.ACCESS_TOKEN_EXPIRY || "1h"), // Set expiration time
     });
