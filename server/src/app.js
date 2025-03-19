@@ -13,7 +13,7 @@ import shopOrderRouter from "./routes/shop/order-routes.js";
 const app = express();
 
 // Middleware to parse URL-encoded data
-app.use(express.urlencoded({ extended: true })); // Add this line
+app.use(express.urlencoded({ extended: true }));
 
 // app.use(
 //   cors({

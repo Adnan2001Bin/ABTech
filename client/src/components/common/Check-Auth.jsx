@@ -5,18 +5,6 @@ function CheckAuth({ isAuthenticated, user, children }) {
 
   console.log(location.pathname, isAuthenticated);
 
-  // Redirect unauthenticated users to the login page if they try to access protected routes
-  // if (
-  //   !isAuthenticated &&
-  //   (location.pathname.includes("/about") ||
-  //     location.pathname.includes("/doctorslist") ||
-  //     location.pathname.includes("/contact") ||
-  //     location.pathname.includes("/my-profile") ||
-  //     location.pathname.includes("/my-appoinments") ||
-  //     location.pathname.includes("/appoinments"))
-  // ) {
-  //   return <Navigate to="/auth/login" />;
-  // }
 
   if (
     !isAuthenticated &&

@@ -4,6 +4,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { Skeleton } from "../ui/skeleton";
+import imageUpload from "../../assets/photo.png"
 
 function ProductImageUpload({
   imageFiles,
@@ -87,7 +88,7 @@ function ProductImageUpload({
                 className="flex flex-col items-center h-20 cursor-pointer"
               >
                 <img
-                  src="/src/assets/photo.png"
+                  src={imageUpload}
                   alt="Upload icon"
                   className="w-8 h-8 sm:w-10 sm:h-10 mb-2"
                 />

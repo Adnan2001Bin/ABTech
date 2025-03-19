@@ -58,9 +58,9 @@ function App() {
     {
       path: "/admin",
       element: (
-        <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+        // <CheckAuth isAuthenticated={isAuthenticated} user={user}>
           <AdminLayout />
-        </CheckAuth>
+        /* </CheckAuth> */
       ),
       children: [
         { path: "additems", element: <AdminAdditems /> },
